@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:testdemochart/widgets/alarm_chart.dart';
 import 'package:testdemochart/widgets/chart_bar.dart';
 import 'package:testdemochart/widgets/chart_pie.dart';
 import 'package:testdemochart/widgets/linechart.dart';
@@ -20,20 +21,25 @@ class _HomePageState extends State<HomePage> {
   List<charts.Series<Task, String>>? seriesPieData;
   List<charts.Series<Sales, int>>? seriesLineData;
   final random = Random();
+
   _generateData() {
     var data1 = [
-       Pollution(1980, 'USA', 30)
-
+      new Pollution(1980, 'USA', 30),
     ];
     var data2 = [
-      new Pollution(1985, 'USA', 100),
-      new Pollution(1980, 'Asia', 150),
-      new Pollution(1985, 'Europe', 80),
+      new Pollution(1985, 'USA', random.nextInt(200)),
     ];
     var data3 = [
-      new Pollution(1985, 'USA', 200),
-      new Pollution(1980, 'Asia', 300),
-      new Pollution(1985, 'Europe', 180),
+      new Pollution(1985, 'USA', random.nextInt(200)),
+    ];
+    var data4 = [
+      new Pollution(1985, 'USA', random.nextInt(200)),
+    ];
+    var data5 = [
+      new Pollution(1985, 'USA', random.nextInt(200)),
+    ];
+    var data6 = [
+      new Pollution(1985, 'USA', random.nextInt(200)),
     ];
 
     var piedata = [
@@ -107,6 +113,41 @@ class _HomePageState extends State<HomePage> {
       ),
     );
 
+    seriesData!.add(
+      charts.Series(
+        domainFn: (Pollution pollution, _) => pollution.place,
+        measureFn: (Pollution pollution, _) => pollution.quantity,
+        id: '2020',
+        data: data4,
+        fillPatternFn: (_, __) => charts.FillPatternType.solid,
+        fillColorFn: (Pollution pollution, _) =>
+            charts.ColorUtil.fromDartColor(Color(0xffff9900)),
+      ),
+    );
+
+    seriesData!.add(
+      charts.Series(
+        domainFn: (Pollution pollution, _) => pollution.place,
+        measureFn: (Pollution pollution, _) => pollution.quantity,
+        id: '2021',
+        data: data5,
+        fillPatternFn: (_, __) => charts.FillPatternType.solid,
+        fillColorFn: (Pollution pollution, _) =>
+            charts.ColorUtil.fromDartColor(Color(0xffff9900)),
+      ),
+    );
+    seriesData!.add(
+      charts.Series(
+        domainFn: (Pollution pollution, _) => pollution.place,
+        measureFn: (Pollution pollution, _) => pollution.quantity,
+        id: '2021',
+        data: data6,
+        fillPatternFn: (_, __) => charts.FillPatternType.solid,
+        fillColorFn: (Pollution pollution, _) =>
+            charts.ColorUtil.fromDartColor(Color(0xffff9900)),
+      ),
+    );
+
     seriesPieData!.add(
       charts.Series(
         domainFn: (Task task, _) => task.task,
@@ -162,7 +203,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: DefaultTabController(
-        length: 3,
+        length: 4,
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Color(0xff1976d2),
@@ -175,6 +216,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Tab(icon: Icon(FontAwesomeIcons.chartPie)),
                 Tab(icon: Icon(FontAwesomeIcons.chartLine)),
+                Tab(icon: Icon(FontAwesomeIcons.uncharted))
               ],
             ),
             title: Text('Flutter Charts'),
@@ -188,6 +230,9 @@ class _HomePageState extends State<HomePage> {
               Padding(
                   padding: EdgeInsets.all(8.0),
                   child: LineChart(seriesLineData)),
+              Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: GaugeChart()),
             ],
           ),
         ),

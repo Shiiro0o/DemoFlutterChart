@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:testdemochart/widgets/alarm_chart.dart';
 import 'package:testdemochart/widgets/chart_bar.dart';
+import 'package:testdemochart/widgets/chart_bar_stack.dart';
 import 'package:testdemochart/widgets/chart_pie.dart';
+import 'package:testdemochart/widgets/combo_chart.dart';
 import 'package:testdemochart/widgets/linechart.dart';
 
 import 'models/pollution.dart';
@@ -24,22 +26,48 @@ class _HomePageState extends State<HomePage> {
 
   _generateData() {
     var data1 = [
-      new Pollution(1980, 'USA', 30),
+       Pollution(1980, 'USA', 30),
+       Pollution(1980, 'USA1' , random.nextInt(200)),
+       Pollution(1980,'USA2' , random.nextInt(200)),
+       Pollution(1980, 'USA3', random.nextInt(200)),
+       Pollution(1980, 'USA4', random.nextInt(200)),
     ];
     var data2 = [
-      new Pollution(1985, 'USA', random.nextInt(200)),
+       Pollution(1985, 'USA', random.nextInt(200)),
+       Pollution(1985, 'USA1', random.nextInt(200)),
+       Pollution(1985, 'USA2', random.nextInt(200)),
+       Pollution(1985, 'USA3', random.nextInt(200)),
+       Pollution(1985, 'USA4', random.nextInt(200)),
     ];
     var data3 = [
-      new Pollution(1985, 'USA', random.nextInt(200)),
+       Pollution(1986, 'USA', random.nextInt(200)),
+      Pollution(1986, 'USA1', random.nextInt(200)),
+      Pollution(1986, 'USA2', random.nextInt(200)),
+      Pollution(1986, 'USA3', random.nextInt(200)),
+      Pollution(1986, 'USA4', random.nextInt(200)),
+
     ];
     var data4 = [
-      new Pollution(1985, 'USA', random.nextInt(200)),
+      new Pollution(1987, 'USA', random.nextInt(200)),
+      new Pollution(1987, 'USA1', random.nextInt(200)),
+      new Pollution(1987, 'USA2', random.nextInt(200)),
+      new Pollution(1987, 'USA3', random.nextInt(200)),
+      new Pollution(1987, 'USA4', random.nextInt(200)),
     ];
     var data5 = [
-      new Pollution(1985, 'USA', random.nextInt(200)),
+      new Pollution(1988, 'USA', random.nextInt(200)),
+      new Pollution(1988, 'USA1', random.nextInt(200)),
+      new Pollution(1988, 'USA2', random.nextInt(200)),
+      new Pollution(1988, 'USA3', random.nextInt(200)),
+      new Pollution(1988, 'USA4', random.nextInt(200)),
+
     ];
     var data6 = [
-      new Pollution(1985, 'USA', random.nextInt(200)),
+      new Pollution(1989, 'USA', random.nextInt(200)),
+      new Pollution(1989, 'USA1', random.nextInt(200)),
+      new Pollution(1989, 'USA2', random.nextInt(200)),
+      new Pollution(1989, 'USA3', random.nextInt(200)),
+      new Pollution(1989, 'USA4', random.nextInt(200)),
     ];
 
     var piedata = [
@@ -162,7 +190,9 @@ class _HomePageState extends State<HomePage> {
 
     seriesLineData!.add(
       charts.Series(
-        colorFn: (__, _) => charts.ColorUtil.fromDartColor(Color(0xff990099)),
+
+        colorFn: (_, __) =>
+            charts.ColorUtil.fromDartColor(Color(0xff04f110)),
         id: 'Air Pollution',
         data: linesalesdata,
         domainFn: (Sales sales, _) => sales.yearval,
@@ -171,17 +201,18 @@ class _HomePageState extends State<HomePage> {
     );
     seriesLineData!.add(
       charts.Series(
-        colorFn: (__, _) => charts.ColorUtil.fromDartColor(Color(0xff109618)),
         id: 'Air Pollution',
         data: linesalesdata1,
+        dashPatternFn: (_, __) => [2, 2],
         domainFn: (Sales sales, _) => sales.yearval,
         measureFn: (Sales sales, _) => sales.salesval,
       ),
     );
+
     seriesLineData!.add(
       charts.Series(
-        colorFn: (__, _) => charts.ColorUtil.fromDartColor(Color(0xffff9900)),
         id: 'Air Pollution',
+        dashPatternFn: (_, __) => [8, 3, 2, 3],
         data: linesalesdata2,
         domainFn: (Sales sales, _) => sales.yearval,
         measureFn: (Sales sales, _) => sales.salesval,
@@ -203,7 +234,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: DefaultTabController(
-        length: 4,
+        length: 6,
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Color(0xff1976d2),
@@ -214,9 +245,13 @@ class _HomePageState extends State<HomePage> {
                 Tab(
                   icon: Icon(FontAwesomeIcons.solidChartBar),
                 ),
+                Tab(
+                  icon: Icon(FontAwesomeIcons.chartBar),
+                ),
                 Tab(icon: Icon(FontAwesomeIcons.chartPie)),
                 Tab(icon: Icon(FontAwesomeIcons.chartLine)),
-                Tab(icon: Icon(FontAwesomeIcons.uncharted))
+                Tab(icon: Icon(FontAwesomeIcons.uncharted)),
+                Tab(icon: Icon(FontAwesomeIcons.chartArea))
               ],
             ),
             title: Text('Flutter Charts'),
@@ -226,6 +261,8 @@ class _HomePageState extends State<HomePage> {
               Padding(
                   padding: EdgeInsets.all(8.0), child: ChartBar(seriesData)),
               Padding(
+                  padding: EdgeInsets.all(8.0), child: ChartBarStack(seriesData)),
+              Padding(
                   padding: EdgeInsets.all(8.0), child: ChartPie(seriesPieData)),
               Padding(
                   padding: EdgeInsets.all(8.0),
@@ -233,6 +270,10 @@ class _HomePageState extends State<HomePage> {
               Padding(
                   padding: EdgeInsets.all(8.0),
                   child: GaugeChart()),
+              Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: NumericComboLineBarChart()),
+
             ],
           ),
         ),

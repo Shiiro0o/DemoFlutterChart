@@ -20,24 +20,17 @@ class LineChart extends StatelessWidget {
             Expanded(
               child: charts.LineChart(seriesLineData,
                   defaultRenderer: new charts.LineRendererConfig(
-                      includeArea: true, stacked: true),
+                      includeArea: false, stacked: true,includePoints: true),
                   animate: true,
                   animationDuration: Duration(seconds: 1),
                   behaviors: [
                     new charts.ChartTitle('Years',
-                        behaviorPosition: charts.BehaviorPosition.bottom,
-                        titleOutsideJustification:
-                            charts.OutsideJustification.middleDrawArea),
+                        behaviorPosition: charts.BehaviorPosition.bottom),
                     new charts.ChartTitle('Sales',
-                        behaviorPosition: charts.BehaviorPosition.start,
-                        titleOutsideJustification:
-                            charts.OutsideJustification.middleDrawArea),
+                        behaviorPosition: charts.BehaviorPosition.start),
                     new charts.ChartTitle(
                       'Departments',
-                      behaviorPosition: charts.BehaviorPosition.end,
-                      titleOutsideJustification:
-                          charts.OutsideJustification.middleDrawArea,
-                    )
+                      behaviorPosition: charts.BehaviorPosition.end )
                   ]),
             ),
           ],
